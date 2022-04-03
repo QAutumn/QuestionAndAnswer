@@ -21,7 +21,13 @@ class ViewController: UIViewController {
     var index: Int = 1 {
         didSet {
             questionIndexLabel.text = "\(index)/13"
-            progrcessBar.frame.size.width = UIScreen.main.bounds.width / 13 * CGFloat(index)
+            progrcessBar.snp.updateConstraints { make in
+                make.left.equalToSuperview()
+                make.top.equalTo(bottomStackView.snp.bottom).offset(50)
+                make.height.equalTo(40)
+                make.width.equalTo(UIScreen.main.bounds.width / 13 * CGFloat(index))
+            }
+         
         }
     }
     
@@ -29,7 +35,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        correctButton.addTarget(self, action: "onClicked:", for: .touchUpInside)
+        correctButton.addTarget(self, action: #selector(onClicked(_:)), for: .touchUpInside)
     }
 
     func setupUI(){
@@ -57,9 +63,9 @@ class ViewController: UIViewController {
         view.addSubview(progrcessBar)
         progrcessBar.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.top.equalTo(bottomStackView).offset(10)
-            make.height.equalTo(20)
-            make.width.equalTo(0)
+            make.top.equalTo(bottomStackView.snp.bottom).offset(50)
+            make.height.equalTo(40)
+            make.width.equalTo(50)
         }
         
     }
@@ -151,10 +157,11 @@ class ViewController: UIViewController {
     func makeProgressBar() -> UIView {
         let bar = UIView()
         bar.backgroundColor = .yellow
+        bar.frame = CGRect(x: 0, y: 0, width: 1000, height: 100)
         return bar
     }
     
-    func onClicked(_ sender: Any) {
+    @objc func onClicked(_ sender: AnyObject?) {
         index += 1
     }
 }
