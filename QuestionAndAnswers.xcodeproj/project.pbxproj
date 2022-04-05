@@ -13,6 +13,7 @@
 		4197746B27F9CE6500DAD7FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4197746927F9CE6500DAD7FE /* Main.storyboard */; };
 		4197746D27F9CE6600DAD7FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4197746C27F9CE6600DAD7FE /* Assets.xcassets */; };
 		4197747027F9CE6600DAD7FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4197746E27F9CE6600DAD7FE /* LaunchScreen.storyboard */; };
+		419A291C27FACB8000FC3AE3 /* Qusetion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 419A291B27FACB8000FC3AE3 /* Qusetion.swift */; };
 		4C5E8C37DC37EE91A29FB0E3 /* Pods_QuestionAndAnswers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D0A32E974403809878DAC1 /* Pods_QuestionAndAnswers.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		4197746C27F9CE6600DAD7FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4197746F27F9CE6600DAD7FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4197747127F9CE6600DAD7FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		419A291B27FACB8000FC3AE3 /* Qusetion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Qusetion.swift; sourceTree = "<group>"; };
 		7EBF730A41DCBF574C9E4B12 /* Pods-QuestionAndAnswers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuestionAndAnswers.debug.xcconfig"; path = "Target Support Files/Pods-QuestionAndAnswers/Pods-QuestionAndAnswers.debug.xcconfig"; sourceTree = "<group>"; };
 		DEA57C774F6675D6A7540D6B /* Pods-QuestionAndAnswers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuestionAndAnswers.release.xcconfig"; path = "Target Support Files/Pods-QuestionAndAnswers/Pods-QuestionAndAnswers.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +76,7 @@
 				4197746327F9CE6500DAD7FE /* AppDelegate.swift */,
 				4197746527F9CE6500DAD7FE /* SceneDelegate.swift */,
 				4197746727F9CE6500DAD7FE /* ViewController.swift */,
+				419A291B27FACB8000FC3AE3 /* Qusetion.swift */,
 				4197746927F9CE6500DAD7FE /* Main.storyboard */,
 				4197746C27F9CE6600DAD7FE /* Assets.xcassets */,
 				4197746E27F9CE6600DAD7FE /* LaunchScreen.storyboard */,
@@ -88,7 +91,6 @@
 				7EBF730A41DCBF574C9E4B12 /* Pods-QuestionAndAnswers.debug.xcconfig */,
 				DEA57C774F6675D6A7540D6B /* Pods-QuestionAndAnswers.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -208,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4197746827F9CE6500DAD7FE /* ViewController.swift in Sources */,
+				419A291C27FACB8000FC3AE3 /* Qusetion.swift in Sources */,
 				4197746427F9CE6500DAD7FE /* AppDelegate.swift in Sources */,
 				4197746627F9CE6500DAD7FE /* SceneDelegate.swift in Sources */,
 			);

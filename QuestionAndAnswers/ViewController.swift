@@ -17,25 +17,30 @@ class ViewController: UIViewController {
     lazy var scoreLabel: UILabel = makeScoreLabel()
     lazy var bottomStackView: UIStackView = makeBottomStackView()
     lazy var progrcessBar: UIView = makeProgressBar()
+    var a: Optional<String> = Optional("!@")
     
-    var index: Int = 1 {
+    var index: Int = 0 {
         didSet {
-            questionIndexLabel.text = "\(index)/13"
+            questionIndexLabel.text = "\(index + 1)/\(questions.count)"
             progrcessBar.snp.updateConstraints { make in
-                make.left.equalToSuperview()
-                make.top.equalTo(bottomStackView.snp.bottom).offset(50)
-                make.height.equalTo(40)
-                make.width.equalTo(UIScreen.main.bounds.width / 13 * CGFloat(index))
+                make.width.equalTo(view.frame.width / CGFloat(questions.count) * CGFloat(index + 1))
             }
-         
+        }
+    }
+    
+    var score: Int = 0 {
+        didSet {
+            scoreLabel.text = "得分：\(score)"
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        setupUI()
+        view.backgroundColor = UIColor(named: "backgroundColor")
         correctButton.addTarget(self, action: #selector(onClicked(_:)), for: .touchUpInside)
+        errorButton.addTarget(self, action: #selector(onClicked(_:)), for: .touchUpInside)
+
+        setupUI()
     }
 
     func setupUI(){
@@ -56,8 +61,8 @@ class ViewController: UIViewController {
         
         view.addSubview(bottomStackView)
         bottomStackView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
             make.top.equalTo(selectButtonStackView.snp.bottom).offset(100)
+            make.centerX.equalToSuperview()
         }
         
         view.addSubview(progrcessBar)
@@ -65,25 +70,23 @@ class ViewController: UIViewController {
             make.left.equalToSuperview()
             make.top.equalTo(bottomStackView.snp.bottom).offset(50)
             make.height.equalTo(40)
+            make.width.equalTo(view.frame.width / CGFloat(questions.count) * CGFloat(index + 1))
+        }
+        
+        questionIndexLabel.snp.makeConstraints { make in
             make.width.equalTo(50)
         }
         
-    }
-    
-    func makeTitleLabel() -> UILabel {
-        let titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFont(ofSize: 20)
-        titleLabel.text = "无奖问答"
-        titleLabel.textColor = .black
-        titleLabel.textAlignment = .center
-        return titleLabel
+        scoreLabel.snp.makeConstraints { make in
+            make.right.equalToSuperview()
+        }
     }
     
     func makeQuestionLabel() -> UILabel {
         let questionLabel = UILabel()
         questionLabel.font = UIFont.systemFont(ofSize: 20)
-        questionLabel.text = "问题标签"
-        questionLabel.textColor = .black
+        questionLabel.text = questions[index].text
+        questionLabel.textColor = UIColor(named: "textColor")
         questionLabel.textAlignment = .center
         return questionLabel
     }
@@ -99,6 +102,7 @@ class ViewController: UIViewController {
         correctButton.setTitleColor(.white, for: .highlighted)
         correctButton.backgroundColor = .green
         correctButton.layer.cornerRadius = 5
+        correctButton.tag = 1
         return correctButton
     }
     
@@ -113,6 +117,7 @@ class ViewController: UIViewController {
         errorButton.setTitleColor(.white, for: .highlighted)
         errorButton.backgroundColor = .red
         errorButton.layer.cornerRadius = 5
+        errorButton.tag = 0
         return errorButton
     }
     
@@ -129,8 +134,8 @@ class ViewController: UIViewController {
     func makeQuestionIndexLabel() -> UILabel {
         let questionIndexLabel = UILabel()
         questionIndexLabel.font = UIFont.systemFont(ofSize: 20)
-        questionIndexLabel.text = "1/13"
-        questionIndexLabel.textColor = .black
+        questionIndexLabel.text = "1/\(questions.count)"
+        questionIndexLabel.textColor = UIColor(named: "textColor")
         questionIndexLabel.textAlignment = .center
         return questionIndexLabel
     }
@@ -139,8 +144,9 @@ class ViewController: UIViewController {
         let scoreLabel = UILabel()
         scoreLabel.font = UIFont.systemFont(ofSize: 20)
         scoreLabel.text = "得分：0"
-        scoreLabel.textColor = .black
+        scoreLabel.textColor = UIColor(named: "textColor")
         scoreLabel.textAlignment = .center
+        scoreLabel.frame = CGRect(x: 0, y: 0, width: 50, height: 24)
         return scoreLabel
     }
     
@@ -148,8 +154,8 @@ class ViewController: UIViewController {
         let stackView = UIStackView()
         [questionIndexLabel, scoreLabel].forEach( { stackView.addArrangedSubview($0)} )
         stackView.axis = .horizontal
-        stackView.spacing = UIScreen.main.bounds.width * 0.7
-        stackView.alignment = .center
+        stackView.spacing = UIScreen.main.bounds.width * 0.5
+        stackView.alignment = .bottom
         stackView.distribution = .fill
         return stackView
     }
@@ -157,12 +163,35 @@ class ViewController: UIViewController {
     func makeProgressBar() -> UIView {
         let bar = UIView()
         bar.backgroundColor = .yellow
-        bar.frame = CGRect(x: 0, y: 0, width: 1000, height: 100)
         return bar
     }
     
     @objc func onClicked(_ sender: AnyObject?) {
-        index += 1
+        let btn = sender as? UIButton
+        let currentQuestion = questions[index]
+        
+        nextQuestion()
+        
+        if ((btn?.tag == 0 && !currentQuestion.answer) || (btn?.tag == 1 && currentQuestion.answer)) {
+            score += 1
+        }
+        
     }
+    
+    func nextQuestion() {
+        index = min(index + 1, questions.count - 1)
+        if index == questions.count - 1 {
+            var alert = UIAlertController(title: "漂亮", message: "你已经完成了全部题目！ 是否再来一遍？", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "再来一遍", style: .default, handler: { _ in
+                self.index = 0
+                self.score = 0
+            }))
+            alert.addAction(UIAlertAction(title: "来个屁", style: .destructive))
+            self.present(alert, animated: true)
+            
+        }
+        questionLabel.text = questions[index].text
+    }
+    
 }
 
